@@ -8,6 +8,7 @@ Purpose: Contains the base code to perform mark down to html code
 '''
 
 import markdown
+from tidylib import tidy_document
 
 class Engine():
     '''
@@ -15,13 +16,17 @@ class Engine():
     code conversion
     '''
 
-    def __init__(self):
+    def __init__(self, author):
         self.engine_name = 'Lazarus Engine'
+        self.author = author
 
 
-    def convert(self, content):
+    def convert(self, content, format=False):
         '''Converts a markdown string given to html code'''
-        return markdown.markdown(str(content))
+        if format:
+            return tidy_document(markdown.markdown(str(content)),{'indent':1, 'doctype': 'strict'})
+        else:
+            return markdown.markdown(str(content))
 
     def convert_file(self, filename):
         '''
