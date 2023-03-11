@@ -64,6 +64,4 @@ class Engine():
             print('\n\nMd converted\n\n'+html_output)
 
             # write the html content to the markdown
-            html_output = self.template
-            
             of.write(self.template.render({'title':output_file, 'content':html_output}))
