@@ -32,6 +32,8 @@ class TestLazarusEngine(unittest.TestCase):
         with open(basefile_path) as fobj:
             lines = fobj.readlines()
 
+        breakpoint()
+
         self.failIf(len(lines) < 100, 'Base might be corrupt')
 
         self.assertEqual(len(lines), 8, 'Base file is corrupt!')
