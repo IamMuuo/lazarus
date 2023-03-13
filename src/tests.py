@@ -22,11 +22,11 @@ class TestLazarusEngine(unittest.TestCase):
 
         self.lazarus = Engine('Lazarus Test')
 
-    def check_template_file_exists(self):
+    def test_check_template_file_exists(self):
         '''
         Tests to check if the base template file exists
         '''
-        basefile_path = os.path.dirname(__file__)+'/templates/base.html'
+        basefile_path = os.path.dirname(__file__)+'/lazarus/templates/base.html'
 
         # Open the file and check if it has content
         with open(basefile_path) as fobj:
