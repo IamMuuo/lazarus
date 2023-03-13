@@ -9,6 +9,7 @@ generator
 
 import unittest
 from lazarus.engine import Engine
+import os
 
 class TestLazarusEngine(unittest.TestCase):
     '''Tests the lazarus engine'''
@@ -21,6 +22,20 @@ class TestLazarusEngine(unittest.TestCase):
 
         self.lazarus = Engine('Lazarus Test')
 
+    def check_template_file_exists(self):
+        '''
+        Tests to check if the base template file exists
+        '''
+        basefile_path = os.path.dirname(__file__)+'/templates/base.html'
+
+        # Open the file and check if it has content
+        with open(basefile_path) as fobj:
+            lines = fobj.readlines()
+
+        self.failIf(len(lines) < 100, 'Base might be corrupt')
+
+        self.assertEqual(len(lines), 8, 'Base file is corrupt!')
+
     def test_basic_markdown_conversion(self):
         '''
         Tests if the Lazarus engine can perform basic conversion
@@ -32,7 +47,6 @@ class TestLazarusEngine(unittest.TestCase):
         
         self.assertEqual('<h1>Lazarus Engine!</h1>', self.lazarus.convert(markdown_string),
                          'Couldn\'t Convert from markdown to HTML')
-
 
 # Call the test main
 unittest.main()
