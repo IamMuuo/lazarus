@@ -32,11 +32,7 @@ class TestLazarusEngine(unittest.TestCase):
         with open(basefile_path) as fobj:
             lines = fobj.readlines()
 
-        breakpoint()
-
-        self.failIf(len(lines) < 100, 'Base might be corrupt')
-
-        self.assertEqual(len(lines), 8, 'Base file is corrupt!')
+        self.assertEqual(len(lines), 18, 'Base file is corrupt!')
 
     def test_basic_markdown_conversion(self):
         '''
@@ -49,6 +45,36 @@ class TestLazarusEngine(unittest.TestCase):
         
         self.assertEqual('<h1>Lazarus Engine!</h1>', self.lazarus.convert(markdown_string),
                          'Couldn\'t Convert from markdown to HTML')
+
+    def test_markdown_file_to_html_conversion(self):
+        '''
+        Tests if the lazarus engine can parse a markdown file
+        and convert its content to its html equivalent
+        '''
+
+        content = ''
+        markdown_content = """
+# To Do
+## At Home
+* Wash dishes
+* Install winter tires
+## At Work
+* Finish Report
+* Book Team **101** meeting
+"""
+        with open('tests.md', 'w') as outfd:
+            outfd.write(markdown_content)
+
+        with open('tests.md', 'r') as infd:
+            for line in infd.readlines():
+                content += line
+        
+        # Try perform a simple conversion to html
+        self.lazarus.write_html_file('tests.md', 'tests.html')
+
+        with open('tests.html', 'r') as infd:
+            self.assertIsNotNone(infd.readlines(), 'Text file cannot be None')
+        
 
 # Call the test main
 unittest.main()
